@@ -7,6 +7,9 @@ pipeline {
     environment {
         BUILD_ENV = 'production'
         appVersion = ''
+        ACCOUNT_ID = '891377283297'
+        ProjectName = 'RoboShop'
+        ComponentName = 'catalogue'
     }
     options {
         timeout(time: 60, unit: 'SECONDS')
@@ -35,10 +38,15 @@ pipeline {
         stage('Build the Image') {
             steps {
                 script{
-                    sh """
-                        docker build -t catalogue:${appVersion} .
-                        docker images
-                    """
+                    withAWS(region:'us-east-1',credentials:'aws-creds') {
+                        sh """
+                            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com
+                            docker build ${ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/${ProjectName}/${ComponentName}:${appVersion}
+                            docker images
+                            docker push ${ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/${ProjectName}/${ComponentName}:${appVersion}
+
+                        """
+                    }
                 }
             }
         }
