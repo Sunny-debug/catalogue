@@ -41,13 +41,6 @@ pipeline {
                     """
                 }
             }
-            steps {
-                script{
-                    sh """
-                        npm install
-                    """
-                }
-            }
         }
         stage('Deploy') {
             steps {
