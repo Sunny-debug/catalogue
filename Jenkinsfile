@@ -8,7 +8,7 @@ pipeline {
         BUILD_ENV = 'production'
         appVersion = ''
         ACCOUNT_ID = '891377283297'
-        ProjectName = 'RoboShop'
+        ProjectName = 'roboshop'
         ComponentName = 'catalogue'
     }
     options {
