@@ -12,7 +12,6 @@ pipeline {
         ComponentName = 'catalogue'
     }
     options {
-        timeout(time: 60, unit: 'SECONDS')
         disableConcurrentBuilds()
     }
     // This is a sample Jenkins pipeline that demonstrates the use of parameters, environment variables, and stages. It includes a build stage, a test stage, and a deploy stage. The pipeline also has post actions to handle different outcomes of the pipeline execution.
