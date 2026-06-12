@@ -32,6 +32,23 @@ pipeline {
                 }
             }
         }
+        stage('Build the Image') {
+             steps {
+                script{
+                    sh """
+                        docker build -t catalogue:${appVersion} .
+                        docker images
+                    """
+                }
+            }
+            steps {
+                script{
+                    sh """
+                        npm install
+                    """
+                }
+            }
+        }
         stage('Deploy') {
             steps {
                 script{
