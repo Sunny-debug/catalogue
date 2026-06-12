@@ -33,7 +33,7 @@ pipeline {
             }
         }
         stage('Build the Image') {
-             steps {
+            steps {
                 script{
                     sh """
                         docker build -t catalogue:${appVersion} .
