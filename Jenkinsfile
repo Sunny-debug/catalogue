@@ -83,6 +83,23 @@ pipeline {
                 }
             }
         }
+        stage('Trivy Scan') {
+            steps {
+                script{
+                    sh """
+                    trivy image \
+                        --scanners vuln \
+                        --severity HIGH,CRITICAL \
+                        --exit-code 1 \
+                        --skip-db-update \
+                        --skip-dirs /node_modules \
+                        --skip-files "**/package.json" \
+                        --fromat table \
+                            ${ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/${ProjectName}/${ComponentName}:${appVersion}
+                    """
+                }
+            }
+        }
         stage('Deploy') {
             steps {
                 script{
